@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - DDoS Detection</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-900 text-white min-h-screen">
+    <nav class="bg-gray-800 p-4">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-xl font-bold">DDoS Detection System</h1>
+            <div>
+                <a href="/" class="text-gray-300 hover:text-white mx-4">Home</a>
+                <a href="/dashboard" class="text-gray-300 hover:text-white mx-4">Dashboard</a>
+            </div>
+        </div>
+    </nav>
+    <div class="container mx-auto mt-8 p-4">
+        <h2 class="text-2xl font-bold mb-6 text-center">Traffic Analysis Dashboard</h2>
+        <div class="bg-gray-800 p-6 rounded-lg shadow-lg">
+            <h3 class="text-xl font-semibold mb-4">Recent Traffic Analysis</h3>
+            {% if history %}
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left">
+                        <thead>
+                            <tr class="bg-gray-700">
+                                <th class="p-3">IP Address</th>
+                                <th class="p-3">Timestamp</th>
+                                <th class="p-3">Prediction</th>
+                                <th class="p-3">Confidence</th>
+                                <th class="p-3">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for entry in history %}
+                                <tr class="border-b border-gray-700">
+                                    <td class="p-3">{{ entry.ip_address }}</td>
+                                    <td class="p-3">{{ entry.timestamp }}</td>
+                                    <td class="p-3">{{ entry.result }}</td>
+                                    <td class="p-3">{{ entry.confidence }}</td>
+                                    <td class="p-3">
+                                        {% if entry.is_attack %}
+                                            <span class="text-red-500">Attack</span>
+                                        {% else %}
+                                            <span class="text-green-500">Normal</span>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% else %}
+                <p class="text-gray-300">No analysis history available.</p>
+            {% endif %}
+            <a href="/" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4 inline-block">
+                Back to Home
+            </a>
+        </div>
+    </div>
+</body>
+</html>
