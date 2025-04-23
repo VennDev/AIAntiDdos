@@ -20,6 +20,7 @@ try:
     network_data = NetworkData(SERVER_IP)
     traffic_analyzer = TrafficAnalyzer()
     ip_manager = IPManager()
+    user_data_manager = UserDataManager()
 except Exception as e:
     logging.error(f"Initialization failed: {e}")
     raise
@@ -50,8 +51,8 @@ def index():
             result, confidence, is_attack = traffic_analyzer.analyze_traffic(traffic_df, http_request_rate, network_features)
             
             if is_attack:
-                UserDataManager().add_user_data_if_not_exists(ip_address)
-                UserDataManager().get_user_data(ip_address).handle_checks(traffic_df)
+                user_data_manager.add_user_data_if_not_exists(ip_address)
+                user_data_manager.get_user_data(ip_address).handle_checks(traffic_df)
 
             traffic_analyzer.store_analysis_history(ip_address, current_time, result, confidence, is_attack)
             traffic_analyzer.clear_current_stack(ip_address)
@@ -62,10 +63,10 @@ def index():
                 'is_attack': is_attack
             })
 
-            if UserDataManager().get_user_data(ip_address).is_full_violation():
+            is_existing_user = user_data_manager.is_ip_in_user_data(ip_address)
+            if is_existing_user and user_data_manager.get_user_data(ip_address).is_full_violation():
                 ip_manager.ban_ip(ip_address, current_timestamp, Config.BAN_DURATION)
                 logging.info(f"IP {ip_address} banned for {Config.BAN_DURATION} seconds due to full violation.")
-
 
         # Custom your HTML rendering logic here
         return render_template('index.html', **render_vars)
