@@ -1,13 +1,13 @@
 import logging
 import time
 from checks.acheck import Check
-from handlers import user_data
+from handlers import user_data_manager
 from handlers.violation import Violation
 
 
 class CheckA(Check):
     
-    def __init__(self, user_data_manager: user_data.UserDataManager):
+    def __init__(self, user_data_manager: user_data_manager.UserDataManager):
         super().__init__()
         self.last_time = 0
         self.user_data_manager = user_data_manager
