@@ -15,7 +15,6 @@ class CheckA(Check):
         return 50
     
     def handle(self, ip: str, data):
-        from handlers import user_data_manager
         self.user_data_manager.get_user_data(ip) 
 
         current_time = time.time()
