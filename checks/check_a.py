@@ -6,14 +6,17 @@ from handlers.violation import Violation
 
 
 class CheckA(Check):
-    last_time = 0
+    
+    def __init__(self, user_data_manager: user_data.UserDataManager):
+        super().__init__()
+        self.last_time = 0
+        self.user_data_manager = user_data_manager
     
     def point(self):
         return 50
     
     def handle(self, ip: str, data):
-        user_data_manager = user_data.UserDataManager()
-        user_data_manager.get_user_data(ip) 
+        self.user_data_manager.get_user_data(ip) 
 
         current_time = time.time()
         diff = current_time - self.last_time
@@ -26,5 +29,5 @@ class CheckA(Check):
             )
 
             logging.info(f"----------- Check A triggered for IP {ip}: {violation}")
-            user_data_manager.get_user_data(ip).violation.add_violation(violation)
+            self.user_data_manager.get_user_data(ip).violation.add_violation(violation)
         self.last_time = current_time

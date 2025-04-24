@@ -8,7 +8,7 @@ from models.traffic_analyzer import TrafficAnalyzer
 from models.ip_manager import IPManager
 from utils.logging_config import configure_logging
 from utils.network_utils import get_server_ip
-from handlers.user_data import UserDataManager
+from handlers.user_data_manager import UserDataManager
 from middlewares.check_ip_ban import check_ip_ban
 from config import Config
 

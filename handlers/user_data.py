@@ -1,11 +1,13 @@
 from checks.check_a import CheckA
+from handlers.user_data_manager import UserDataManager
 from .violation import ViolationManager 
 from config import Config
 
 class UserData:
-    def __init__(self, ip: str):
+    def __init__(self, ip: str, user_data_manager: UserDataManager):
+        self.user_data_manager = user_data_manager
         self.checks = [
-            CheckA()
+            CheckA(user_data_manager),
         ]
 
         self.ip = ip
@@ -17,19 +19,3 @@ class UserData:
 
     def is_full_violation(self) -> bool:
         return self.violation.get_total_points() >= Config.GOAL_POINTS
-
-class UserDataManager:
-    def __init__(self):
-        self.user_data = {}
-
-    def is_ip_in_user_data(self, ip: str) -> bool:
-        return ip in self.user_data
-
-    def add_user_data_if_not_exists(self, ip: str):
-        if ip not in self.user_data:
-            self.user_data[ip] = UserData(ip)
-            return True
-        return False
-
-    def get_user_data(self, ip: str) -> UserData | None:
-        return self.user_data.get(ip)
