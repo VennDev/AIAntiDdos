@@ -1,10 +1,9 @@
 from checks.check_a import CheckA
-from handlers.user_data_manager import UserDataManager
 from .violation import ViolationManager 
 from config import Config
 
 class UserData:
-    def __init__(self, ip: str, user_data_manager: UserDataManager):
+    def __init__(self, ip: str, user_data_manager):
         self.user_data_manager = user_data_manager
         self.checks = [
             CheckA(user_data_manager),
