@@ -29,8 +29,8 @@ class IPManager:
                 logging.info(f"IP {ip_address} ban has expired. Removed from banned list.")
         return False
 
-    def ban_ip(self, ip_address, current_timestamp, ban_duration, reason):
-        self.banned_ips[ip_address] = {'reason': reason, 'timestamp': current_timestamp + ban_duration, 'real_time': current_timestamp}
+    def ban_ip(self, ip_address, current_timestamp, ban_duration):
+        self.banned_ips[ip_address] = current_timestamp + ban_duration
         self.save_banned_ips()
 
     def update_request_timestamps(self, ip_address, current_timestamp):

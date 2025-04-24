@@ -72,8 +72,7 @@ def index():
 
             is_existing_user = user_data_manager.is_ip_in_user_data(ip_address)
             if is_existing_user and user_data_manager.get_user_data(ip_address).is_full_violation():
-                violation = user_data_manager.get_user_data(ip_address).violation
-                ip_manager.ban_ip(ip_address, current_timestamp, Config.BAN_DURATION, violation)
+                ip_manager.ban_ip(ip_address, current_timestamp, Config.BAN_DURATION)
                 logging.info(f"IP {ip_address} banned for {Config.BAN_DURATION} seconds due to full violation.")
 
         # Custom your HTML rendering logic here

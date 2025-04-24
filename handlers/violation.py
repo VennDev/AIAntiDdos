@@ -43,6 +43,3 @@ class ViolationManager:
 
     def clear_violations(self) -> None:
         self.violations.clear()
-
-    def __repr__(self):
-        return f"ViolationManager(violations={self.violations})"
