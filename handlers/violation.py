@@ -13,6 +13,8 @@ class ViolationManager:
 
     def add_violation(self, violation: Violation) -> bool:
         if self.get_violation_by_id(violation.id):
+            violation.point += self.get_violation_by_id(violation.id).point
+            self.violations.append(violation)
             return False
         self.violations.append(violation)
         return True
