@@ -1,3 +1,4 @@
+import logging
 import time
 from checks.acheck import Check
 from handlers import user_data
@@ -24,4 +25,5 @@ class CheckA(Check):
                 self.point()
             )
 
+            logging.info(f"Check A triggered for IP {ip}: {violation}")
             user_data_manager.get_user_data(ip).violation.add_violation(violation)
