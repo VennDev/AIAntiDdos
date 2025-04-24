@@ -8,7 +8,7 @@ class CheckA(Check):
     last_time = 0
     
     def point(self):
-        return 10
+        return 50
     
     def handle(self, ip: str, data):
         user_data_manager = user_data.UserDataManager()
