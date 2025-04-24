@@ -25,6 +25,13 @@ except Exception as e:
     logging.error(f"Initialization failed: {e}")
     raise
 
+@app.before_request
+@check_ip_ban
+def log_request_info():
+    ip_address = request.remote_addr
+    current_time = datetime.now()
+    logging.info(f"Request from IP: {ip_address} at {current_time}")
+
 @app.route('/')
 @check_ip_ban
 def index():
@@ -75,6 +82,7 @@ def index():
         return render_template('error.html', error=str(e))
 
 @app.route('/dashboard')
+@check_ip_ban
 def dashboard():
     return render_template('dashboard.html', history=traffic_analyzer.analysis_history)
 
