@@ -15,7 +15,7 @@ class IPManager:
                 return json.load(f)
         return {}
 
-    def save_banned_ips(self, reason: str):
+    def save_banned_ips(self):
         with open(Config.BANNED_IPS_FILE, 'w') as f:
             json.dump(self.banned_ips, f)
 
@@ -31,7 +31,7 @@ class IPManager:
 
     def ban_ip(self, ip_address, current_timestamp, ban_duration, reason):
         self.banned_ips[ip_address] = {'reason': reason, 'timestamp': current_timestamp + ban_duration, 'real_time': current_timestamp}
-        self.save_banned_ips(reason)
+        self.save_banned_ips()
 
     def update_request_timestamps(self, ip_address, current_timestamp):
         self.request_timestamps[ip_address].append(current_timestamp)
