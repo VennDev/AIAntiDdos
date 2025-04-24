@@ -4,9 +4,9 @@ from config import Config
 
 class UserData:
     def __init__(self, ip: str):
-        self.checks = {
+        self.checks = [
             CheckA()
-        }
+        ]
 
         self.ip = ip
         self.violation = ViolationManager() 

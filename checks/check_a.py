@@ -18,12 +18,13 @@ class CheckA(Check):
         current_time = time.time()
         diff = current_time - self.last_time
 
-        if diff < 5:
+        if diff < 10:
             violation = Violation(
                 "check_a", 
                 "Check A triggered too frequently in a short period of time diff=" + str(diff), 
                 self.point()
             )
 
-            logging.info(f"Check A triggered for IP {ip}: {violation}")
+            logging.info(f"----------- Check A triggered for IP {ip}: {violation}")
             user_data_manager.get_user_data(ip).violation.add_violation(violation)
+        self.last_time = current_time
